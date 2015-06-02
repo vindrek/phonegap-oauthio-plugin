@@ -14,12 +14,12 @@
     </description>
 
     <asset src="dist/oauth.js" target="oauth.js" />
-  
+
     <js-module src="dist/oauth.js" name="OAuth">
         <merges target="OAuth" />
     </js-module>
 
-    <platform name="android">        
+    <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
           <access origin="https://oauth.io" />
         </config-file>
@@ -40,12 +40,12 @@
     <platform name="wp8">
       <config-file target="config.xml" parent="/*">
           <access origin="https://oauth.io" />
-      </config-file>  
+      </config-file>
     </platform>
 
     <engines>
       <engine name="cordova" version=">=3.0.0" />
     </engines>
 
-    <dependency id="cordova-plugin-inappbrowser" />
+    <dependency id="cordova-plugin-inappbrowser" url="https://github.com/AppGyver/cordova-plugin-inappbrowser.git" />
 </plugin>
