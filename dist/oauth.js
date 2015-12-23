@@ -784,6 +784,7 @@ module.exports = function(Materia, client_states, providers_api) {
         cache.storeCache(data.provider, res);
       }
       request = res.request;
+      res.__request = request;
       delete res.request;
       tokens = void 0;
       if (res.access_token) {

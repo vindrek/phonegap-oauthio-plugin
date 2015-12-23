@@ -280,6 +280,7 @@ module.exports = (Materia, client_states, providers_api) ->
 				res.expires_in = opts.expires
 			cache.storeCache data.provider, res
 		request = res.request
+		res.__request = request
 		delete res.request
 
 		tokens = undefined

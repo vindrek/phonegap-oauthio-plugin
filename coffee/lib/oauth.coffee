@@ -100,6 +100,7 @@ module.exports = (Materia) ->
 			client_states.push opts.state
 			url = config.oauthd_url + "/auth/" + provider + "?k=" + config.key
 			url += '&redirect_uri=http%3A%2F%2Flocalhost'
+			url += location.pathname
 			url += "&opts=" + encodeURIComponent(JSON.stringify(opts))  if opts
 
 			opts.provider = provider
@@ -114,14 +115,13 @@ module.exports = (Materia) ->
 				return
 			, 1200 * 1000)
 
-			wnd = window.open(url, "_blank", 'toolbar=yes,closebuttoncaption=Back,presentationstyle=formsheet,toolbarposition=top,clearsessioncache=yes,clearcache=yes')
-			
+			wnd = window.open(url, "_blank", 'toolbar=no,location=no,closebuttoncaption=Back,presentationstyle=formsheet,clearsessioncache=yes,clearcache=yes')
+
 			wnd.addEventListener "loadstart", (ev) ->
 				return  if ev.url.substr(0, 17) isnt "http://localhost/"
 				clearTimeout wndTimeout  if wndTimeout
 				results = /[\\#&]oauthio=([^&]*)/.exec(ev.url)
 				gotmessage = true
-				wnd.close()
 				if results and results[1]
 					opts.data = decodeURIComponent(results[1].replace(/\+/g, " "))
 					opts.callback = callback
@@ -132,6 +132,9 @@ module.exports = (Materia) ->
 						opts.callback new Error("unable to receive token")
 					defer?.reject new Error("unable to receive token")
 				return
+			wnd.addEventListener "loadstop", (ev) ->
+				if ev.url.substr(0, 17) isnt "http://localhost/"
+					wnd.close()
 			wnd.addEventListener "exit", () ->
 				if not gotmessage
 					defer?.reject new Error("The popup was closed")
