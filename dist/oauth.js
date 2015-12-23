@@ -270,6 +270,7 @@ module.exports = function(Materia) {
       client_states.push(opts.state);
       url = config.oauthd_url + "/auth/" + provider + "?k=" + config.key;
       url += '&redirect_uri=http%3A%2F%2Flocalhost';
+      url += location.pathname;
       if (opts) {
         url += "&opts=" + encodeURIComponent(JSON.stringify(opts));
       }
