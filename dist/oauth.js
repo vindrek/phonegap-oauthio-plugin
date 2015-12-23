@@ -297,7 +297,6 @@ module.exports = function(Materia) {
         }
         results = /[\\#&]oauthio=([^&]*)/.exec(ev.url);
         gotmessage = true;
-        wnd.close();
         if (results && results[1]) {
           opts.data = decodeURIComponent(results[1].replace(/\+/g, " "));
           opts.callback = callback;
@@ -312,6 +311,13 @@ module.exports = function(Materia) {
           }
         }
       });
+
+      wnd.addEventListener("loadstop", function(ev) {
+        if (ev.url.substr(0, 17) !== "http://localhost/") {
+          wnd.close();
+        }
+      });
+
       wnd.addEventListener("exit", function() {
         if (!gotmessage) {
           if (defer != null) {
