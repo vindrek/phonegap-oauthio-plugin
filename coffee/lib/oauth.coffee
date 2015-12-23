@@ -133,7 +133,7 @@ module.exports = (Materia) ->
 					defer?.reject new Error("unable to receive token")
 				return
 			wnd.addEventListener "loadstop", (ev) ->
-				if ev.url.substr(0, 17) isnt "http://localhost/"
+				if ev.url.substr(0, 17) is "http://localhost/"
 					wnd.close()
 			wnd.addEventListener "exit", () ->
 				if not gotmessage

@@ -314,7 +314,7 @@ module.exports = function(Materia) {
       });
 
       wnd.addEventListener("loadstop", function(ev) {
-        if (ev.url.substr(0, 17) !== "http://localhost/") {
+        if (ev.url.substr(0, 17) == "http://localhost/") {
           wnd.close();
         }
       });
